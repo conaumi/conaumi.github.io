@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotros y Canasta de Descuento | AUMI Cocina Artesanal</title>
+  <style>
+    :root {
+      --primary-color: #2e6f40;
+      --secondary-color: #489462;
+      --accent-warm: #b85d3b;
+      --bg-color: #fbf7f0;
+      --text-color: #2b2623;
+      --nav-bg: #225430;
+      --footer-bg: #1a3f25;
+      --color-tarjeta: #ffffff;
+      --borde-suave: #e3dcd0;
+      --fondo-suave: #f6efe4;
+      --borde-campo: #c9bfb0;
+      --fondo-campo: #fffdf9;
+      --badge-fondo: #e6f2e9;
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #57a773;
+      --secondary-color: #79c293;
+      --accent-warm: #df7a53;
+      --bg-color: #141916;
+      --text-color: #f2efe9;
+      --nav-bg: #102417;
+      --footer-bg: #0c1b11;
+      --color-tarjeta: #222722;
+      --borde-suave: #384038;
+      --fondo-suave: #2b312b;
+      --borde-campo: #4a544a;
+      --fondo-campo: #1a1e1a;
+      --badge-fondo: #243829;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.55;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--nav-bg));
+      color: #ffffff;
+      padding: 2.5rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+
+    header p {
+      margin: 0.75rem auto 1.25rem;
+      max-width: 720px;
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2rem;
+      background-color: var(--nav-bg);
+      padding: 0.85rem 1rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #f3d5c5;
+      text-decoration: underline;
+    }
+
+    .btn-tema {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      color: #ffffff;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .btn-tema:hover {
+      background-color: #ffffff;
+      color: var(--nav-bg);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background-color: var(--color-tarjeta);
+      border: 1px solid var(--borde-suave);
+      border-radius: 12px;
+      padding: 1.6rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .titulo-cotizador {
+      text-align: center;
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.65rem;
+    }
+
+    .badge-eco {
+      display: inline-block;
+      background-color: var(--badge-fondo);
+      color: var(--secondary-color);
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .mvv-bloque {
+      margin-top: 1.25rem;
+      padding-top: 1.15rem;
+      border-top: 1px solid var(--borde-suave);
+    }
+
+    .mvv-bloque h3 {
+      margin: 1rem 0 0.4rem;
+      color: var(--primary-color);
+      font-size: 1.15rem;
+    }
+
+    .mvv-bloque h3:first-child {
+      margin-top: 0;
+    }
+
+    .mvv-bloque p {
+      margin: 0 0 0.85rem;
+    }
+
+    .valores-lista {
+      margin: 0.45rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .valores-lista li {
+      margin-bottom: 0.55rem;
+    }
+
+    .contenedor-imagen-precios {
+      margin: 0.9rem 0 1.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--borde-suave);
+      background-color: var(--fondo-suave);
+      text-align: center;
+      padding: 0.65rem;
+    }
+
+    .marco-lupa {
+      position: relative;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .marco-lupa img {
+      display: block;
+      max-width: 100%;
+      width: auto;
+      max-height: 480px;
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto;
+      border-radius: 8px;
+      user-select: none;
+    }
+
+    .lupa-circulo {
+      position: absolute;
+      width: 165px;
+      height: 165px;
+      border-radius: 50%;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 2px #ffffff;
+      pointer-events: none;
+      display: none;
+      background-repeat: no-repeat;
+      z-index: 10;
+    }
+
+    .barra-lupa {
+      margin-top: 0.55rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .btn-lupa {
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-lupa.activa,
+    .btn-lupa:hover {
+      background-color: var(--primary-color);
+      color: #ffffff;
+    }
+
+    .estado-guia-precios {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .grid-cotizador {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .campo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    select,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 0.65rem;
+      border: 1px solid var(--borde-campo);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background-color: var(--fondo-campo);
+      color: var(--text-color);
+    }
+
+    .resultado-box {
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      background-color: var(--fondo-suave);
+      border-left: 5px solid var(--accent-warm);
+      border-radius: 8px;
+    }
+
+    .desglose-canasta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.4rem;
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .badge-ahorro {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .badge-ahorro.pendiente {
+      background-color: var(--accent-warm);
+    }
+
+    .precio-total {
+      font-size: 1.65rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 0.3rem 0;
+    }
+
+    .acciones-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.15rem;
+      align-items: center;
+    }
+
+    .btn-enviar {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      padding: 0.8rem 1.3rem;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-enviar:hover:not(:disabled) {
+      background-color: var(--nav-bg);
+    }
+
+    .btn-enviar:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .btn-secundario {
+      background-color: var(--accent-warm);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.8rem 1.3rem;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .btn-secundario:hover {
+      filter: brightness(0.94);
+    }
+
+    .resumen-solicitud {
+      margin-top: 0.85rem;
+      font-size: 0.94rem;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--nav-bg), var(--footer-bg));
+      color: #ffffff;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 2rem;
+    }
+
+    footer h3 {
+      margin: 0 0 0.85rem;
+      font-size: 1.15rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      background-color: rgba(255, 255, 255, 0.08);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .social-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .social-link.proyecto-hermano {
+      background-color: var(--accent-warm);
+      border-color: transparent;
+    }
+
+    .social-link.proyecto-hermano:hover {
+      filter: brightness(1.08);
+    }
+
+    .footer-copy {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Ventana flotante de cupón 40% */
+    .modal-cupon-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.58);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 999;
+    }
+
+    .modal-cupon-backdrop.abierto {
+      display: flex;
+    }
+
+    .modal-cupon-caja {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background-color: var(--color-tarjeta);
+      color: var(--text-color);
+      border: 1px solid var(--borde-suave);
+      border-radius: 16px;
+      padding: 1.6rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      animation: aparecerModal 0.22s ease;
+    }
+
+    @keyframes aparecerModal {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .btn-cerrar-modal {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      background: transparent;
+      border: 1px solid var(--borde-suave);
+      color: var(--text-color);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-cerrar-modal:hover {
+      background-color: var(--fondo-suave);
+    }
+
+    .tag-descuento {
+      display: inline-block;
+      background-color: var(--accent-warm);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 0.55rem;
+    }
+
+    .modal-cupon-caja h3 {
+      margin: 0 0 0.45rem;
+      color: var(--primary-color);
+      font-size: 1.45rem;
+    }
+
+    .modal-cupon-caja p {
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-campos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .estado-cupon {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      min-height: 1.2rem;
+    }
+
+    .btn-flotante-cupon {
+      position: fixed;
+      right: 1.15rem;
+      bottom: 1.15rem;
+      background-color: var(--accent-warm);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.7rem 1.05rem;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      z-index: 900;
+    }
+
+    .btn-flotante-cupon:hover {
+      filter: brightness(1.06);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Nosotros y Canasta de Descuento | AUMI</h1>
+    <p>Conservas artesanales, aceites infusionados para cocinar, aderezos, pastas de condimentos y sazonadores naturales elaborados con ingredientes reales.</p>
+  </header>
+
+  <nav>
+    <a href="https://aumi.github.io/index.html">Inicio 🏠</a>
+    <a href="https://aumi.github.io/nosotros.html">Nosotros 👥</a>
+    <a href="#canasta-descuento">Canasta 10% OFF 🧺</a>
+    <a href="https://aumi.github.io/resenas.html">Reseñas ⭐</a>
+    <button type="button" id="btnModoTema" class="btn-tema" aria-label="Alternar entre modo claro y oscuro">
+      🌙 Modo oscuro
+    </button>
+  </nav>
+
+  <main>
+    <section class="card">
+      <span class="badge-eco">🌿 Despensa Artesanal y Natural</span>
+      <h2>Sobre AUMI</h2>
+      <p>
+        En <strong>AUMI</strong> creamos productos culinarios artesanales pensados para elevar tu cocina diaria: conservas caseras, aceites aromáticos para cocinar, aderezos balanceados, pastas de condimentos concentradas y sazonadores naturales libres de conservantes artificiales.
+      </p>
+
+      <div class="mvv-bloque">
+        <h3>Misión</h3>
+        <p>
+          En AUMI, transformamos la cocina cotidiana en una experiencia llena de aroma, sabor auténtico y bienestar mediante conservas artesanales, aceites infusionados, aderezos, pastas de condimentos y sazonadores naturales elaborados con materias primas seleccionadas y procesos limpios que respetan la esencia de cada ingrediente.
+        </p>
+
+        <h3>Visión</h3>
+        <p>
+          Consolidar a AUMI como marca referente en despensa culinaria artesanal y saludable, reconocida por la pureza de sus recetas, el equilibrio gastronómico de sus aceites, pastas y sazonadores, y la confianza de hogares y cocineros que buscan ingredientes honestos, versátiles y llenos de carácter.
+        </p>
+
+        <h3>Valores</h3>
+        <ul class="valores-lista">
+          <li><strong>Ingredientes Reales y Pureza:</strong> Seleccionamos vegetales frescos, especias enteras y aceites de calidad sin rellenos ni saborizantes artificiales.</li>
+          <li><strong>Extracción y Cocción Cuidada:</strong> Aplicamos infusiones a baja temperatura y cocciones controladas para preservar aceites esenciales, color y nutrientes.</li>
+          <li><strong>Versatilidad Gastronómica:</strong> Formulamos conservas, aderezos, pastas de condimentos y sazonadores listos para potenciar tanto platos rápidos como preparaciones de autor.</li>
+          <li><strong>Inocuidad y Trazabilidad:</strong> Mantenemos estándares rigurosos de esterilización, envasado y frescura en cada lote para garantizar seguridad y vida útil natural.</li>
+          <li><strong>Cercanía y Transparencia:</strong> Comunicamos con claridad cada ingrediente, origen y modo de uso en cocina para acompañar a nuestra comunidad en cada receta.</li>
+        </ul>
+      </div>
+
+      <div class="acciones-form">
+        <a href="#canasta-descuento" class="btn-enviar">Armar mi canasta con 10% OFF</a>
+        <a href="https://aumi.github.io/index.html" class="btn-secundario">Ver catálogo completo</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="badge-eco">🍳 Sabor Auténtico en Cada Frasco</span>
+      <h2>Lleva a tu Cocina una Despensa Hecha con Dedicación</h2>
+      <p>
+        Desde una pasta de tomate orgánico concentrada o un aceite infusionado con hierbas y especias hasta aderezos listos para servir y sazonadores balanceados: cada frasco de <strong>AUMI</strong> está pensado para ahorrarte tiempo sin sacrificar el sabor hecho en casa. Combina <strong>3 productos</strong> en nuestra canasta y obtén un <strong>10% de descuento adicional</strong> inmediato.
+      </p>
+      <div class="acciones-form">
+        <a href="#canasta-descuento" class="btn-enviar">Calcular mi combo de 3 productos</a>
+      </div>
+    </section>
+
+    <section id="canasta-descuento" class="card">
+      <h2 class="titulo-cotizador">Canasta de Descuento AUMI (3 Productos = 10% OFF)</h2>
+
+      <div id="cajaImagenPrecios" class="contenedor-imagen-precios">
+        <div id="marcoLupaPrecios" class="marco-lupa">
+          <img
+            id="imgGuiaPrecios"
+            src=""
+            alt="Guía visual de precios de productos AUMI"
+            style="display:none;"
+          />
+          <div id="lupaPrecios" class="lupa-circulo" aria-hidden="true"></div>
+        </div>
+        <div class="barra-lupa">
+          <p id="estadoGuiaPrecios" class="estado-guia-precios">Cargando guía visual de precios AUMI...</p>
+          <button type="button" id="btnToggleLupa" class="btn-lupa">🔍 Lupa activa</button>
+        </div>
+      </div>
+
+      <p>
+        Selecciona <strong>3 productos de cocina</strong> en las casillas (puedes combinar categorías distintas o repetir tu favorito). Al completar las 3 casillas se aplica automáticamente un <strong>10% de descuento adicional</strong> sobre el total:
+      </p>
+
+      <form id="formCanasta">
+        <div class="grid-cotizador">
+          <div class="campo">
+            <label for="producto1">1. Primer producto de tu canasta</label>
+            <select id="producto1" class="canasta-select"></select>
+          </div>
+          <div class="campo">
+            <label for="producto2">2. Segundo producto de tu canasta</label>
+            <select id="producto2" class="canasta-select"></select>
+          </div>
+          <div class="campo">
+            <label for="producto3">3. Tercer producto de tu canasta</label>
+            <select id="producto3" class="canasta-select"></select>
+          </div>
+        </div>
+
+        <div class="campo" style="margin-top: 1rem;">
+          <label for="notasPedido">Notas de preferencia o sabores (opcional)</label>
+          <textarea
+            id="notasPedido"
+            rows="2"
+            placeholder="Ej. Prefiero el aceite con toque de ajo y romero, y la conserva suave sin picante..."
+          ></textarea>
+        </div>
+
+        <div class="resultado-box">
+          <div class="desglose-canasta">
+            <span>Subtotal sin descuento: <strong id="subtotalCanasta">$0 COP</strong></span>
+            <span id="badgeDescuento" class="badge-ahorro pendiente">Selecciona 3 productos para activar 10% OFF</span>
+          </div>
+          <div>Precio final de tu canasta:</div>
+          <div id="precioFinalCanasta" class="precio-total">$0 COP</div>
+          <small id="detalleAhorro">
+            Elige un producto en cada una de las 3 casillas para calcular el total y descontar automáticamente el 10% adicional.
+          </small>
+        </div>
+
+        <div class="acciones-form">
+          <button type="submit" class="btn-enviar">Confirmar resumen de canasta</button>
+          <a href="https://aumi.github.io/index.html" class="btn-secundario">Volver al inicio AUMI</a>
+        </div>
+
+        <div id="resumenConfirmado" class="resumen-solicitud"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <h3>Síguenos en Redes Sociales y Proyectos</h3>
+    <div class="social-links">
+      <a href="https://www.tiktok.com/@aumi" target="_blank" rel="noopener noreferrer" class="social-link">
+        🎵 TikTok AUMI
+      </a>
+      <a href="https://www.instagram.com/aumi" target="_blank" rel="noopener noreferrer" class="social-link">
+        📸 Instagram AUMI
+      </a>
+      <a href="https://www.facebook.com/aumi" target="_blank" rel="noopener noreferrer" class="social-link">
+        📘 Facebook AUMI
+      </a>
+      <a href="https://tuftingsolidario.github.io/" target="_blank" rel="noopener noreferrer" class="social-link proyecto-hermano">
+        🧶 Tuftingsolidario (tuftingsolidario.github.io)
+      </a>
+    </div>
+    <p class="footer-copy">
+      &copy; 2026 · AUMI Cocina Artesanal · Sabores naturales hechos con dedicación.
+    </p>
+  </footer>
+
+  <!-- Ventana flotante de cupón 40% por primera compra -->
+  <div id="modalCupon" class="modal-cupon-backdrop" role="dialog" aria-modal="true" aria-labelledby="tituloModalCupon">
+    <div class="modal-cupon-caja">
+      <button type="button" id="btnCerrarCupon" class="btn-cerrar-modal" aria-label="Cerrar ventana de cupón">✕</button>
+      <span class="tag-descuento">🎁 40% DE DESCUENTO · PRIMERA COMPRA</span>
+      <h3 id="tituloModalCupon">¡Llévate un 40% OFF en tu primer pedido AUMI!</h3>
+      <p>
+        Déjanos tu correo o teléfono y te enviaremos tu cupón del 40% por primera compra para nuestras conservas, aceites y sazonadores artesanales.
+      </p>
+      <form id="formCupon" class="modal-campos">
+        <div class="campo">
+          <label for="correoCupon">Correo electrónico</label>
+          <input type="email" id="correoCupon" placeholder="tucorreo@ejemplo.com" />
+        </div>
+        <div class="campo">
+          <label for="telefonoCupon">Teléfono o WhatsApp</label>
+          <input type="tel" id="telefonoCupon" placeholder="Ej. +57 300 000 0000" />
+        </div>
+        <button type="submit" id="btnEnviarCupon" class="btn-enviar">Quiero mi cupón del 40%</button>
+      </form>
+      <div id="estadoCupon" class="estado-cupon"></div>
+    </div>
+  </div>
+
+  <button type="button" id="btnAbrirCupon" class="btn-flotante-cupon">🎁 40% OFF Primera Compra</button>
+
+  <script>
+    (() => {
+      // 1. Tema claro / oscuro
+      const CLAVE_TEMA = "aumi_theme";
+      const rootEl = document.documentElement;
+      const btnTema = document.getElementById("btnModoTema");
+
+      const aplicarTema = (tema) => {
+        const esOscuro = tema === "dark";
+        if (esOscuro) rootEl.setAttribute("data-theme", "dark");
+        else rootEl.removeAttribute("data-theme");
+        if (btnTema) {
+          btnTema.setAttribute("aria-pressed", String(esOscuro));
+          btnTema.textContent = esOscuro ? "☀️ Modo claro" : "🌙 Modo oscuro";
+        }
+      };
+
+      const guardado = localStorage.getItem(CLAVE_TEMA);
+      const inicial = (guardado === "dark" || guardado === "oscuro")
+        ? "dark"
+        : (guardado === "claro" || guardado === "light")
+          ? "light"
+          : (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      aplicarTema(inicial);
+
+      btnTema?.addEventListener("click", () => {
+        const siguiente = rootEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        localStorage.setItem(CLAVE_TEMA, siguiente);
+        aplicarTema(siguiente);
+      });
+
+      // 2. Catálogo de productos AUMI para las 3 casillas de la canasta
+      const CATALOGO_AUMI = [
+        {
+          grupo: "Conservas Artesanales",
+          items: [
+            { nombre: "Conserva de vegetales encurtidos en especias (250 g)", precio: 18000 },
+            { nombre: "Conserva de antipasto artesanal de berenjena y pimentón (250 g)", precio: 22000 },
+            { nombre: "Conserva de cebolla caramelizada al balsámico (220 g)", precio: 19500 },
+            { nombre: "Conserva de ají dulce y ajo confitado (200 g)", precio: 17500 }
+          ]
+        },
+        {
+          grupo: "Aceites para Cocinar",
+          items: [
+            { nombre: "Aceite infusionado con ajo rostizado y romero (250 ml)", precio: 24000 },
+            { nombre: "Aceite aromático de albahaca y orégano fresco (250 ml)", precio: 23000 },
+            { nombre: "Aceite picante suave de cayena y pimienta negra (250 ml)", precio: 25000 },
+            { nombre: "Aceite culinario multiusos de finas hierbas (500 ml)", precio: 38000 }
+          ]
+        },
+        {
+          grupo: "Aderezos",
+          items: [
+            { nombre: "Aderezo cremoso de ajo asado y hierbas (240 g)", precio: 16500 },
+            { nombre: "Aderezo vinagreta cítrica con mostaza antigua (250 ml)", precio: 17000 },
+            { nombre: "Aderezo ahumado para carnes y vegetales (240 g)", precio: 18500 }
+          ]
+        },
+        {
+          grupo: "Pastas de Condimentos",
+          items: [
+            { nombre: "Pasta de tomate orgánico concentrada artesanal (250 g)", precio: 16000 },
+            { nombre: "Pasta de ajo, cebolla larga y cilantro para sofritos (220 g)", precio: 15000 },
+            { nombre: "Pasta de pimentón asado y especias mediterráneas (220 g)", precio: 17500 }
+          ]
+        },
+        {
+          grupo: "Sazonadores y Otros Productos",
+          items: [
+            { nombre: "Sazonador completo natural sin sal añadida (120 g)", precio: 14000 },
+            { nombre: "Sazonador parrillero de especias tostadas (120 g)", precio: 15500 },
+            { nombre: "Sal marina condimentada con hierbas aromáticas (150 g)", precio: 13500 },
+            { nombre: "Reducción balsámica artesanal para glasear (200 ml)", precio: 21000 }
+          ]
+        }
+      ];
+
+      const formatearCOP = (valor) => "$" + Math.round(Number(valor)).toLocaleString("es-CO") + " COP";
+      const selectsCanasta = [
+        document.getElementById("producto1"),
+        document.getElementById("producto2"),
+        document.getElementById("producto3")
+      ].filter(Boolean);
+
+      // Poblar las 3 casillas con todo el catálogo
+      selectsCanasta.forEach((select, idx) => {
+        const optVacia = document.createElement("option");
+        optVacia.value = "0";
+        optVacia.textContent = `-- Selecciona el producto #${idx + 1} --`;
+        select.appendChild(optVacia);
+
+        CATALOGO_AUMI.forEach((categoria) => {
+          const optgroup = document.createElement("optgroup");
+          optgroup.label = categoria.grupo;
+          categoria.items.forEach((prod) => {
+            const opt = document.createElement("option");
+            opt.value = String(prod.precio);
+            opt.dataset.nombre = prod.nombre;
+            opt.textContent = `${prod.nombre} (${formatearCOP(prod.precio)})`;
+            optgroup.appendChild(opt);
+          });
+          select.appendChild(optgroup);
+        });
+      });
+
+      const subtotalEl = document.getElementById("subtotalCanasta");
+      const precioFinalEl = document.getElementById("precioFinalCanasta");
+      const badgeDescuentoEl = document.getElementById("badgeDescuento");
+      const detalleAhorroEl = document.getElementById("detalleAhorro");
+      const formCanasta = document.getElementById("formCanasta");
+      const notasPedido = document.getElementById("notasPedido");
+      const resumenConfirmado = document.getElementById("resumenConfirmado");
+
+      const calcularCanasta = () => {
+        let subtotal = 0;
+        let seleccionados = 0;
+        const nombres = [];
+
+        selectsCanasta.forEach((select) => {
+          const precio = parseInt(select.value, 10) || 0;
+          if (precio > 0) {
+            subtotal += precio;
+            seleccionados += 1;
+            const opt = select.selectedOptions?.[0];
+            nombres.push(`${opt?.dataset?.nombre || opt?.text || ""} (${formatearCOP(precio)})`);
+          }
+        });
+
+        const aplicaDescuento = seleccionados === 3;
+        const descuento = aplicaDescuento ? Math.round(subtotal * 0.10) : 0;
+        const totalFinal = subtotal - descuento;
+
+        if (subtotalEl) subtotalEl.textContent = formatearCOP(subtotal);
+        if (precioFinalEl) precioFinalEl.textContent = formatearCOP(totalFinal);
+
+        if (badgeDescuentoEl) {
+          if (aplicaDescuento) {
+            badgeDescuentoEl.classList.remove("pendiente");
+            badgeDescuentoEl.textContent = `¡10% OFF activado! Ahorras ${formatearCOP(descuento)}`;
+          } else {
+            const faltan = 3 - seleccionados;
+            badgeDescuentoEl.classList.add("pendiente");
+            badgeDescuentoEl.textContent = `Falta${faltan === 1 ? "" : "n"} ${faltan} producto${faltan === 1 ? "" : "s"} para el 10% OFF`;
+          }
+        }
+
+        if (detalleAhorroEl) {
+          detalleAhorroEl.textContent = aplicaDescuento
+            ? `Canasta completa (3 productos): Subtotal ${formatearCOP(subtotal)} − 10% de descuento (${formatearCOP(descuento)}) = ${formatearCOP(totalFinal)}.`
+            : `Has seleccionado ${seleccionados} de 3 productos. Completa las 3 casillas para aplicar el 10% de descuento adicional al precio final.`;
+        }
+
+        return { subtotal, descuento, totalFinal, seleccionados, nombres, aplicaDescuento };
+      };
+
+      const generarResumenCanasta = (datos) => {
+        if (datos.seleccionados === 0) {
+          return "Selecciona al menos un producto (o los 3 para activar tu 10% de descuento) antes de confirmar.";
+        }
+        const nota = notasPedido?.value.trim() ? ` · Notas: "${notasPedido.value.trim()}"` : "";
+        const textoDesc = datos.aplicaDescuento
+          ? `con 10% OFF aplicado (ahorro de ${formatearCOP(datos.descuento)})`
+          : `(${datos.seleccionados}/3 productos seleccionados, sin el 10% adicional aún)`;
+        return `Canasta AUMI ${textoDesc} — Total: ${formatearCOP(datos.totalFinal)} · Productos: ${datos.nombres.join(" + ")}${nota}.`;
+      };
+
+      selectsCanasta.forEach((select) => {
+        select.addEventListener("change", () => {
+          const datos = calcularCanasta();
+          if (resumenConfirmado?.textContent) {
+            resumenConfirmado.textContent = generarResumenCanasta(datos);
+          }
+        });
+      });
+
+      formCanasta?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const datos = calcularCanasta();
+        if (resumenConfirmado) {
+          resumenConfirmado.textContent = generarResumenCanasta(datos);
+        }
+      });
+
+      calcularCanasta();
+
+      // 3. Lupa sobre la guía visual de precios
+      const marcoLupa = document.getElementById("marcoLupaPrecios");
+      const imgGuia = document.getElementById("imgGuiaPrecios");
+      const lupa = document.getElementById("lupaPrecios");
+      const btnToggleLupa = document.getElementById("btnToggleLupa");
+      const ZOOM = 2.2;
+      let lupaHabilitada = true;
+
+      btnToggleLupa?.addEventListener("click", () => {
+        lupaHabilitada = !lupaHabilitada;
+        btnToggleLupa.classList.toggle("activa", lupaHabilitada);
+        btnToggleLupa.textContent = lupaHabilitada ? "🔍 Lupa activa" : "🔍 Activar lupa";
+        if (!lupaHabilitada && lupa) lupa.style.display = "none";
+      });
+
+      const moverLupa = (clientX, clientY) => {
+        if (!lupaHabilitada || !imgGuia || !lupa || imgGuia.style.display === "none") return;
+        const rect = imgGuia.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+          lupa.style.display = "none";
+          return;
+        }
+
+        const radio = lupa.offsetWidth / 2;
+        lupa.style.display = "block";
+        lupa.style.left = `${x - radio}px`;
+        lupa.style.top = `${y - radio}px`;
+        lupa.style.backgroundImage = `url("${imgGuia.currentSrc || imgGuia.src}")`;
+        lupa.style.backgroundSize = `${rect.width * ZOOM}px ${rect.height * ZOOM}px`;
+        const bgX = -(x * ZOOM - radio);
+        const bgY = -(y * ZOOM - radio);
+        lupa.style.backgroundPosition = `${bgX}px ${bgY}px`;
+      };
+
+      marcoLupa?.addEventListener("mousemove", (e) => moverLupa(e.clientX, e.clientY));
+      marcoLupa?.addEventListener("mouseleave", () => {
+        if (lupa) lupa.style.display = "none";
+      });
+      marcoLupa?.addEventListener("touchmove", (e) => {
+        if (e.touches[0]) {
+          moverLupa(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+      marcoLupa?.addEventListener("touchend", () => {
+        if (lupa) lupa.style.display = "none";
+      });
+
+      // 4. Ventana flotante del cupón 40%
+      const modalCupon = document.getElementById("modalCupon");
+      const btnAbrirCupon = document.getElementById("btnAbrirCupon");
+      const btnCerrarCupon = document.getElementById("btnCerrarCupon");
+
+      const abrirModal = () => modalCupon?.classList.add("abierto");
+      const cerrarModal = () => modalCupon?.classList.remove("abierto");
+
+      btnAbrirCupon?.addEventListener("click", abrirModal);
+      btnCerrarCupon?.addEventListener("click", cerrarModal);
+      modalCupon?.addEventListener("click", (e) => {
+        if (e.target === modalCupon) cerrarModal();
+      });
+
+      if (!sessionStorage.getItem("aumi_cupon_mostrado")) {
+        setTimeout(() => {
+          abrirModal();
+          sessionStorage.setItem("aumi_cupon_mostrado", "1");
+        }, 1800);
+      }
+    })();
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // Reemplaza estos valores por la configuración de tu proyecto Firebase de AUMI si usas su propio proyecto
+    const firebaseConfig = {
+      apiKey: "AIzaSyDt8rNOONVBbJUIXT0MYHAHm6bbV9sZ1mk",
+      authDomain: "ecolegado-21e65.firebaseapp.com",
+      databaseURL: "https://ecolegado-21e65-default-rtdb.firebaseio.com",
+      projectId: "ecolegado-21e65",
+      storageBucket: "ecolegado-21e65.firebasestorage.app",
+      messagingSenderId: "678783567354",
+      appId: "1:678783567354:web:657139d7917401b745d043",
+      measurementId: "G-MJ78QZDTHJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const STORAGE_BUCKET_URL = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/`;
+
+    const imgGuia = document.getElementById("imgGuiaPrecios");
+    const estadoGuia = document.getElementById("estadoGuiaPrecios");
+
+    function normalizarUrlImagen(urlOriginal) {
+      if (!urlOriginal || typeof urlOriginal !== "string") return "";
+      const urlLimpia = urlOriginal.trim();
+      if (!urlLimpia) return "";
+
+      if (/^https?:\/\//i.test(urlLimpia)) {
+        const matchId =
+          urlLimpia.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+          urlLimpia.match(/drive\.google\.com\/(?:open|uc)\?.*id=([a-zA-Z0-9_-]+)/) ||
+          urlLimpia.match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
+        if (matchId?.[1]) {
+          return `https://lh3.googleusercontent.com/d/${matchId[1]}`;
+        }
+        return urlLimpia;
+      }
+
+      const rutaSinSlash = urlLimpia.replace(/^\/+/, "");
+      return `${STORAGE_BUCKET_URL}${encodeURIComponent(rutaSinSlash)}?alt=media`;
+    }
+
+    async function cargarImagenPreciosFirebase() {
+      if (!imgGuia || !estadoGuia) return;
+
+      try {
+        const snapMayus = await getDoc(doc(db, "configuracion", "Precios"));
+        const snapMinus = snapMayus.exists() ? null : await getDoc(doc(db, "configuracion", "precios"));
+        const datos = snapMayus.exists() ? snapMayus.data() : (snapMinus?.exists() ? snapMinus.data() : null);
+
+        if (!datos) {
+          imgGuia.style.display = "none";
+          estadoGuia.textContent = "Guía visual disponible pronto (configura configuracion/Precios en Firestore).";
+          return;
+        }
+
+        const urlCruda =
+          datos.Precios || datos.precios || datos.imagenUrl || datos.url || datos.imagen || datos.foto || datos.storagePath || "";
+        const urlFinal = normalizarUrlImagen(urlCruda);
+
+        if (!urlFinal) {
+          imgGuia.style.display = "none";
+          estadoGuia.textContent = "El documento configuracion/Precios aún no tiene una URL válida.";
+          return;
+        }
+
+        if (datos.alt) imgGuia.alt = datos.alt;
+
+        imgGuia.onload = () => {
+          imgGuia.style.display = "block";
+          estadoGuia.textContent = datos.titulo || datos.descripcion || "Guía visual de precios AUMI";
+        };
+
+        imgGuia.onerror = () => {
+          imgGuia.style.display = "none";
+          estadoGuia.textContent =
+            "No se pudo mostrar la imagen (verifica que sea pública o esté en Firebase Storage).";
+        };
+
+        imgGuia.src = urlFinal;
+      } catch (error) {
+        console.error("Error al cargar configuracion/Precios:", error);
+        imgGuia.style.display = "none";
+        estadoGuia.textContent = "Error al consultar configuracion/Precios en Firestore.";
+      }
+    }
+
+    cargarImagenPreciosFirebase();
+
+    // Un solo envío de cupón por IP
+    const CLAVE_LOCAL_CUPON = "aumi_cupon_reclamado";
+    const formCupon = document.getElementById("formCupon");
+    const correoCupon = document.getElementById("correoCupon");
+    const telefonoCupon = document.getElementById("telefonoCupon");
+    const estadoCupon = document.getElementById("estadoCupon");
+    const btnEnviarCupon = document.getElementById("btnEnviarCupon");
+
+    function marcarCuponYaReclamado(mensaje) {
+      if (correoCupon) correoCupon.disabled = true;
+      if (telefonoCupon) telefonoCupon.disabled = true;
+      if (btnEnviarCupon) {
+        btnEnviarCupon.disabled = true;
+        btnEnviarCupon.textContent = "Cupón ya solicitado";
+      }
+      if (estadoCupon) {
+        estadoCupon.style.color = "var(--primary-color)";
+        estadoCupon.textContent = mensaje;
+      }
+    }
+
+    if (localStorage.getItem(CLAVE_LOCAL_CUPON) === "1") {
+      marcarCuponYaReclamado("Ya solicitaste tu cupón del 40% desde este dispositivo o red.");
+    }
+
+    async function obtenerIpPublica() {
+      const resp = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
+      if (!resp.ok) throw new Error("No se pudo obtener la IP");
+      const data = await resp.json();
+      const ipCruda = String(data.ip || "").trim();
+      if (!ipCruda) throw new Error("IP vacía");
+      return {
+        ipCruda,
+        ipDocId: ipCruda.replace(/[^a-zA-Z0-9]/g, "_")
+      };
+    }
+
+    formCupon?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (localStorage.getItem(CLAVE_LOCAL_CUPON) === "1") {
+        marcarCuponYaReclamado("Solo se permite una solicitud de cupón del 40% por dirección IP.");
+        return;
+      }
+
+      const correo = correoCupon?.value.trim() || "";
+      const telefono = telefonoCupon?.value.trim() || "";
+
+      if (!correo && !telefono) {
+        if (estadoCupon) {
+          estadoCupon.style.color = "var(--accent-warm)";
+          estadoCupon.textContent = "Ingresa al menos tu correo electrónico o tu teléfono para recibir el cupón.";
+        }
+        return;
+      }
+
+      const canalEnvio = correo && telefono ? "correo_y_telefono" : (correo ? "correo" : "telefono");
+
+      if (btnEnviarCupon) btnEnviarCupon.disabled = true;
+      if (estadoCupon) {
+        estadoCupon.style.color = "var(--text-color)";
+        estadoCupon.textContent = "Verificando disponibilidad y registrando tu cupón...";
+      }
+
+      try {
+        const { ipCruda, ipDocId } = await obtenerIpPublica();
+
+        await setDoc(doc(db, "solicitudes_cupones", ipDocId), {
+          ip: ipCruda,
+          correo,
+          telefono,
+          canalEnvio,
+          descuentoPorcentaje: 40,
+          motivo: "primera_compra",
+          marca: "AUMI",
+          origen: "nosotros.html",
+          creadoEn: serverTimestamp()
+        });
+
+        localStorage.setItem(CLAVE_LOCAL_CUPON, "1");
+        formCupon.reset();
+        marcarCuponYaReclamado(
+          "¡Listo! Registramos tu solicitud del 40% de descuento por primera compra (1 por IP) y te lo enviaremos pronto."
+        );
+      } catch (error) {
+        console.error("Error al guardar en solicitudes_cupones:", error);
+        if (error?.code === "permission-denied") {
+          localStorage.setItem(CLAVE_LOCAL_CUPON, "1");
+          marcarCuponYaReclamado("Ya existe una solicitud de cupón del 40% registrada desde tu dirección IP.");
+        } else {
+          if (btnEnviarCupon) btnEnviarCupon.disabled = false;
+          if (estadoCupon) {
+            estadoCupon.style.color = "var(--accent-warm)";
+            estadoCupon.textContent =
+              "No se pudo verificar tu red o guardar la solicitud. Intenta nuevamente en unos segundos.";
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
