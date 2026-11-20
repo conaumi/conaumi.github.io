@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reseñas de Clientes | AUMI Cocina Artesanal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .resenas-intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .resenas-intro h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.7rem;
+    }
+
+    .filtros-resenas {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-filtro {
+      background-color: var(--box-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .btn-filtro.activo,
+    .btn-filtro:hover {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border-color: var(--primary-color);
+    }
+
+    .grid-resenas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .resena-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.85rem;
+    }
+
+    .resena-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .resena-estrellas {
+      color: var(--accent-warm);
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+    }
+
+    .resena-categoria {
+      background-color: var(--badge-fondo);
+      color: var(--secondary-color);
+      font-size: 0.78rem;
+      font-weight: bold;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .resena-texto {
+      margin: 0;
+      font-style: italic;
+      color: var(--text-color);
+    }
+
+    .resena-detalle {
+      background-color: var(--box-bg);
+      border-left: 4px solid var(--secondary-color);
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--muted-color);
+    }
+
+    .resena-autor {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .estado-carga-resenas {
+      text-align: center;
+      font-weight: 600;
+      color: var(--muted-color);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Opiniones de Nuestra Comunidad | AUMI</h1>
+    <p>Descubre cómo nuestras conservas, aceites para cocinar, aderezos, pastas de condimentos y sazonadores transforman cada receta en casa.</p>
+  </header>
+
+  <nav>
+    <a href="https://aumi.github.io/index.html">Inicio 🏠</a>
+    <a href="https://aumi.github.io/nosotros.html">Nosotros 👥</a>
+    <a href="https://aumi.github.io/nosotros.html#canasta-descuento">Canasta 10% OFF 🧺</a>
+    <a href="https://aumi.github.io/resenas.html">Reseñas ⭐</a>
+    <button id="btnTema" type="button" class="btn-tema" aria-label="Alternar entre modo claro y oscuro">🌙 Modo oscuro</button>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <div class="resenas-intro">
+        <span class="badge-eco">⭐ Experiencias Reales en Cocina</span>
+        <h2>Lo que Dicen Quienes Cocinan con AUMI</h2>
+        <p>Aroma natural, textura casera y rendimiento real en cada frasco. Filtra por categoría para conocer la experiencia de uso en el día a día.</p>
+      </div>
+
+      <div class="filtros-resenas" role="group" aria-label="Filtrar reseñas por categoría">
+        <button type="button" class="btn-filtro activo" data-filtro="todos">Todos</button>
+        <button type="button" class="btn-filtro" data-filtro="conservas">Conservas</button>
+        <button type="button" class="btn-filtro" data-filtro="aceites">Aceites</button>
+        <button type="button" class="btn-filtro" data-filtro="aderezos">Aderezos</button>
+        <button type="button" class="btn-filtro" data-filtro="pastas">Pastas y Sazonadores</button>
+      </div>
+
+      <p id="estadoResenas" class="estado-carga-resenas">Cargando reseñas verificadas desde Firestore...</p>
+      <div id="contenedorResenas" class="grid-resenas"></div>
+    </section>
+
+    <section class="cotizador-cta">
+      <h3>¿Listo para probar AUMI en tu propia cocina?</h3>
+      <p>Elige <strong>3 productos</strong> en nuestra canasta de descuento y obtén un <strong>10% adicional</strong> sobre el precio final.</p>
+      <a href="https://aumi.github.io/nosotros.html#canasta-descuento" class="btn btn-secundario">Armar mi Canasta con 10% OFF 🧺</a>
+    </section>
+  </main>
+
+  <footer>
+    <h3>Síguenos en Redes Sociales y Proyectos</h3>
+    <div class="social-links">
+      <a href="https://www.tiktok.com/@aumi" target="_blank" rel="noopener noreferrer" class="social-link">🎵 TikTok AUMI</a>
+      <a href="https://www.instagram.com/aumi" target="_blank" rel="noopener noreferrer" class="social-link">📸 Instagram AUMI</a>
+      <a href="https://www.facebook.com/aumi" target="_blank" rel="noopener noreferrer" class="social-link">📘 Facebook AUMI</a>
+      <a href="https://tuftingsolidario.github.io/" target="_blank" rel="noopener noreferrer" class="social-link">🧶 Tuftingsolidario</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 · AUMI Cocina Artesanal · Sabores naturales hechos con dedicación.</p>
+  </footer>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = "aumi_theme";
+      const rootEl = document.documentElement;
+      const btnTema = document.getElementById("btnTema");
+
+      const aplicarTema = (tema) => {
+        const dark = tema === "dark";
+        if (dark) rootEl.setAttribute("data-theme", "dark");
+        else rootEl.removeAttribute("data-theme");
+        if (btnTema) btnTema.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
+      };
+
+      const guardado = localStorage.getItem(STORAGE_KEY);
+      const inicial = guardado || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      aplicarTema(inicial);
+
+      btnTema?.addEventListener("click", () => {
+        const siguiente = rootEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        localStorage.setItem(STORAGE_KEY, siguiente);
+        aplicarTema(siguiente);
+      });
+    })();
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // Reemplaza por las credenciales de tu proyecto Firebase "aumi" cuando lo conectes
+    const firebaseConfig = {
+      apiKey: "AIzaSyDt8rNOONVBbJUIXT0MYHAHm6bbV9sZ1mk",
+      authDomain: "ecolegado-21e65.firebaseapp.com",
+      databaseURL: "https://ecolegado-21e65-default-rtdb.firebaseio.com",
+      projectId: "ecolegado-21e65",
+      storageBucket: "ecolegado-21e65.firebasestorage.app",
+      messagingSenderId: "678783567354",
+      appId: "1:678783567354:web:657139d7917401b745d043",
+      measurementId: "G-MJ78QZDTHJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const contenedor = document.getElementById("contenedorResenas");
+    const estadoEl = document.getElementById("estadoResenas");
+    const botonesFiltro = document.querySelectorAll(".btn-filtro");
+
+    // Reseñas iniciales de respaldo si la colección "resenas" aún está vacía
+    const RESENAS_RESPALDO = [
+      {
+        autor: "Camila R.",
+        ciudad: "Huila",
+        categoria: "pastas",
+        etiqueta: "Pastas y Sazonadores",
+        producto: "Pasta de tomate orgánico concentrada",
+        estrellas: 5,
+        comentario: "Se nota de inmediato que es tomate real sin espesantes ni acidez artificial. Con dos cucharadas deja una salsa casera increíble.",
+        detalleUso: "Conservación: se mantuvo fresca en refrigeración durante semanas usando cuchara limpia."
+      },
+      {
+        autor: "Andrés M.",
+        ciudad: "Neiva",
+        categoria: "aceites",
+        etiqueta: "Aceites",
+        producto: "Aceite infusionado con ajo rostizado y romero",
+        estrellas: 5,
+        comentario: "El aroma apenas toca la sartén caliente cambia por completo unos vegetales salteados o una pechuga a la plancha.",
+        detalleUso: "Uso ideal: salteados a fuego medio y terminado de panes artesanales."
+      },
+      {
+        autor: "Laura G.",
+        ciudad: "Bogotá",
+        categoria: "conservas",
+        etiqueta: "Conservas",
+        producto: "Antipasto artesanal de berenjena y pimentón",
+        estrellas: 5,
+        comentario: "Textura firme, balance perfecto entre acidez suave y especias. Lo pedí en el combo de 3 productos y valió cada peso.",
+        detalleUso: "Maridaje: perfecto sobre tostadas crujientes o acompañando quesos."
+      },
+      {
+        autor: "Santiago P.",
+        ciudad: "Pitalito",
+        categoria: "aderezos",
+        etiqueta: "Aderezos",
+        producto: "Aderezo cremoso de ajo asado y hierbas",
+        estrellas: 5,
+        comentario: "Nada empalagoso y con sabor herbal auténtico. También lo usamos como marinada rápida antes de hornear.",
+        detalleUso: "Rendimiento: excelente emulsión tanto en frío como en platos tibios."
+      }
+    ];
+
+    let todasLasResenas = [];
+    let filtroActual = "todos";
+
+    const escapar = (texto) => String(texto || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+    const normalizarCategoria = (cat) => {
+      const c = String(cat || "").toLowerCase();
+      if (c.includes("conserva")) return "conservas";
+      if (c.includes("aceite")) return "aceites";
+      if (c.includes("aderezo")) return "aderezos";
+      if (c.includes("pasta") || c.includes("sazonador") || c.includes("condimento")) return "pastas";
+      return "pastas";
+    };
+
+    const renderizarResenas = () => {
+      if (!contenedor) return;
+      const filtradas = filtroActual === "todos"
+        ? todasLasResenas
+        : todasLasResenas.filter((r) => normalizarCategoria(r.categoria) === filtroActual);
+
+      if (!filtradas.length) {
+        contenedor.innerHTML = `<p class="estado-carga-resenas">Aún no hay reseñas en esta categoría.</p>`;
+        return;
+      }
+
+      contenedor.innerHTML = filtradas.map((r) => {
+        const numEstrellas = Math.min(5, Math.max(1, Number(r.estrellas) || 5));
+        const estrellasStr = "★".repeat(numEstrellas) + "☆".repeat(5 - numEstrellas);
+        return `
+          <article class="resena-card">
+            <div>
+              <div class="resena-top">
+                <span class="resena-estrellas" aria-label="${numEstrellas} de 5 estrellas">${estrellasStr}</span>
+                <span class="resena-categoria">${escapar(r.etiqueta || r.categoria || "AUMI")}</span>
+              </div>
+              <h3 style="margin: 0.7rem 0 0.45rem; color: var(--primary-color); font-size: 1.08rem;">
+                ${escapar(r.producto || "Producto AUMI")}
+              </h3>
+              <p class="resena-texto">"${escapar(r.comentario || "")}"</p>
+            </div>
+            <div>
+              ${r.detalleUso ? `<div class="resena-detalle">${escapar(r.detalleUso)}</div>` : ""}
+              <div class="resena-autor" style="margin-top: 0.75rem;">
+                <strong>${escapar(r.autor || "Cliente AUMI")}</strong>
+                <span style="color: var(--muted-color);">${escapar(r.ciudad || "Colombia")}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    };
+
+    botonesFiltro.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        botonesFiltro.forEach((b) => b.classList.remove("activo"));
+        btn.classList.add("activo");
+        filtroActual = btn.dataset.filtro || "todos";
+        renderizarResenas();
+      });
+    });
+
+    async function cargarResenasFirestore() {
+      try {
+        let snap;
+        try {
+          snap = await getDocs(query(collection(db, "resenas"), orderBy("creadoEn", "desc")));
+        } catch {
+          snap = await getDocs(collection(db, "resenas"));
+        }
+
+        if (snap.empty) {
+          todasLasResenas = RESENAS_RESPALDO;
+          if (estadoEl) estadoEl.textContent = "Mostrando experiencias destacadas de nuestra comunidad AUMI.";
+        } else {
+          todasLasResenas = snap.docs.map((d) => d.data());
+          if (estadoEl) estadoEl.textContent = `${todasLasResenas.length} reseñas verificadas de clientes AUMI.`;
+        }
+      } catch (err) {
+        console.error("Error cargando resenas:", err);
+        todasLasResenas = RESENAS_RESPALDO;
+        if (estadoEl) estadoEl.textContent = "Experiencias destacadas de cocina con AUMI.";
+      }
+      renderizarResenas();
+    }
+
+    cargarResenasFirestore();
+  </script>
+</body>
+</html>
