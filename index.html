@@ -3,280 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AUMI | Conservas, Aceites, Aderezos y Sazonadores Artesanales</title>
+  <title>AUMI | Despensa Artesanal</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     :root {
-      --primary-color: #2e6f40;
-      --secondary-color: #489462;
-      --accent-warm: #b85d3b;
-      --bg-color: #fbf7f0;
-      --text-color: #2b2623;
-      --nav-bg: #225430;
+      --primary: #2e6f40;
+      --primary-dark: #225430;
+      --accent: #b85d3b;
+      --bg: #fbf7f0;
+      --surface: #ffffff;
+      --surface-alt: #f6efe4;
+      --text: #2b2623;
+      --muted: #5c534c;
+      --border: #e3dcd0;
     }
     [data-theme="dark"] {
-      --primary-color: #57a773;
-      --secondary-color: #79c293;
-      --accent-warm: #df7a53;
-      --bg-color: #141916;
-      --text-color: #f2efe9;
-      --nav-bg: #102417;
+      --primary: #57a773;
+      --primary-dark: #102417;
+      --accent: #df7a53;
+      --bg: #141916;
+      --surface: #1d2520;
+      --surface-alt: #242e28;
+      --text: #f2efe9;
+      --muted: #c2bab0;
+      --border: #323e36;
     }
+    * { box-sizing: border-box; }
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
       margin: 0;
-      padding: 0;
-      line-height: 1.55;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
     header {
-      background: linear-gradient(135deg, var(--primary-color), var(--nav-bg));
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: #fff;
-      padding: 2.5rem 1rem;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.45rem;
+      padding: 2rem 1rem;
     }
-    header h1 { margin: 0; font-size: 2.2rem; line-height: 1.2; color: #fff; }
-    header p { margin: 0.75rem auto 1.25rem; max-width: 720px; font-size: 1.05rem; color: #fff; opacity: 0.95; }
+    header h1 { margin: 0; font-size: 2.1rem; }
+    header p { margin: 0.5rem auto 0; max-width: 680px; opacity: 0.95; }
     nav {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1.2rem;
-      background-color: var(--nav-bg);
-      padding: 0.85rem 1rem;
       flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--primary-dark);
+      padding: 0.75rem 1rem;
     }
-    nav a { color: #fff; text-decoration: none; font-weight: bold; }
+    nav a { color: #fff; text-decoration: none; font-weight: 700; }
     nav a:hover { color: #f3d5c5; text-decoration: underline; }
     .btn-tema {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.75);
       color: #fff;
-      padding: 0.4rem 0.9rem;
+      border: 1px solid rgba(255,255,255,0.75);
       border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-weight: 700;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
     }
-    .btn-tema:hover { background-color: #fff; color: var(--nav-bg); }
-    .impacto-section, .faq-section {
-      background-color: var(--card-bg, #fff);
-      border: 1px solid var(--border-color, #e3dcd0);
+    .btn-tema:hover { background: #fff; color: var(--primary-dark); }
+    main { max-width: 980px; margin: 0 auto; padding: 1.25rem 1rem 2rem; }
+    .box {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.75rem;
-      margin: 2rem auto;
+      padding: 1.35rem;
+      margin-bottom: 1.25rem;
     }
-    .faq-section { max-width: 980px; }
-    .impacto-section { margin-bottom: 0; text-align: center; }
-    .impacto-section h2, .faq-section h2 { margin-top: 0; color: var(--primary-color, #2e6f40); font-size: 1.6rem; }
-    .faq-section h2 { text-align: center; margin-bottom: 1rem; font-size: 1.65rem; }
-    .impacto-section p { margin: 0 auto 1.25rem; max-width: 680px; color: var(--muted-color, #5c534c); }
-    .btn-contador-arboles {
+    .hero-box { text-align: center; }
+    .hero-box h2 { margin: 0 0 0.5rem; color: var(--primary); font-size: 1.55rem; }
+    .hero-box p { margin: 0 auto 1rem; max-width: 680px; color: var(--muted); }
+    .btn-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.65rem;
-      background-color: var(--primary-color, #2e6f40);
+      gap: 0.5rem;
+      background: var(--primary);
       color: #fff;
       text-decoration: none;
-      padding: 0.85rem 1.45rem;
+      font-weight: 700;
+      padding: 0.75rem 1.3rem;
       border-radius: 999px;
-      font-weight: bold;
-      font-size: 1.05rem;
-      transition: transform 0.15s ease, filter 0.15s ease;
     }
-    .btn-contador-arboles:hover { transform: translateY(-1px); filter: brightness(0.95); }
-    .contador-numero {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 2rem;
-      height: 2rem;
-      padding: 0 0.55rem;
+    .btn-cta:hover { filter: brightness(0.95); }
+    .badge-pct {
+      background: #fff;
+      color: var(--primary);
       border-radius: 999px;
-      background-color: #fff;
-      color: var(--primary-color, #2e6f40);
+      padding: 0.1rem 0.5rem;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 0.9rem;
     }
-    .impacto-media-box {
-      margin: 1.35rem auto 0;
-      background-color: var(--bg-box, #f6efe4);
-      border: 1px solid var(--border-color, #e3dcd0);
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .card-item {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1rem;
-      max-width: 640px;
     }
-    .impacto-media-box img {
+    .card-item h3 { margin: 0 0 0.35rem; color: var(--accent); font-size: 1.05rem; }
+    .card-item p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      align-items: center;
+      text-align: center;
+    }
+    .media-panel {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9rem;
+    }
+    .media-panel img, .media-panel video, .media-panel iframe {
       width: 100%;
-      max-height: 360px;
+      max-height: 280px;
       object-fit: cover;
       border-radius: 8px;
       display: block;
       margin: 0 auto;
     }
-    .impacto-media-caption {
-      margin: 0.65rem 0 0 !important;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--text-main, #2b2623) !important;
+    .logo-img { max-width: 120px; max-height: 120px !important; object-fit: contain !important; }
+    .caption-txt { margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+    details {
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 0;
     }
-    .faq-item { border-bottom: 1px solid var(--border-color, #e3dcd0); padding: 0.9rem 0; }
-    .faq-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .faq-item h3 { margin: 0 0 0.35rem; color: var(--accent-warm, #b85d3b); font-size: 1.08rem; }
-    .faq-item p { margin: 0; color: var(--muted-color, #5c534c); }
-    .logo-fallback-badge {
-      display: inline-block;
-      margin-top: 0.35rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: bold;
-      background-color: var(--card-bg, #fff);
-      color: var(--primary-color, #2e6f40);
-      border: 1px solid var(--border-color, #e3dcd0);
+    details:last-child { border-bottom: none; padding-bottom: 0; }
+    summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+    details p { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.95rem; }
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: var(--primary-dark);
+      color: #fff;
     }
-    .medio-semanal-box img, .medio-semanal-box video {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto;
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 0.5rem 0 0.75rem;
     }
+    .social-links a { color: #fff; text-decoration: none; font-weight: 600; }
+    .social-links a:hover { text-decoration: underline; }
+    .footer-copy { margin: 0; font-size: 0.88rem; opacity: 0.85; }
   </style>
 </head>
 <body>
-  <header class="site-header">
+  <header>
     <h1>AUMI</h1>
-    <p>Tu cocina, tu aroma, tu sabor. Conservas, aceites para cocinar, aderezos, pastas de condimentos y sazonadores artesanales con ingredientes reales.</p>
+    <p>Conservas, aceites infusionados, aderezos, pastas de condimentos y sazonadores artesanales con ingredientes reales.</p>
   </header>
 
   <nav>
-    <a href="https://conaumi.github.io/index.html">Inicio 🏠</a>
-    <a href="https://conaumi.github.io/nosotros.html">Nosotros 👥</a>
-    <a href="https://conaumi.github.io/nosotros.html#canasta-descuento">Canasta 10% OFF 🧺</a>
-    <a href="https://conaumi.github.io/resenas.html">Reseñas ⭐</a>
-    <button id="btnTema" type="button" class="btn-tema" aria-label="Alternar entre modo claro y oscuro">🌙 Modo oscuro</button>
+    <a href="./index.html">Inicio 🏠</a>
+    <a href="./nosotros.html">Nosotros 👥</a>
+    <a href="./nosotros.html#canasta-descuento">Canasta 10% OFF 🧺</a>
+    <a href="./resenas.html">Reseñas ⭐</a>
+    <button id="btnTema" type="button" class="btn-tema">🌙 Modo oscuro</button>
   </nav>
 
-  <section class="showcase-semanal">
-    <div class="showcase-grid">
-      <div class="logo-fijo-box">
-        <img id="logoEstatico" src="logo-aumi.png" alt="Logo estático de AUMI" class="logo-estatico" />
-        <p class="logo-etiqueta">Escríbenos para contactar a un asesor AUMI</p>
-        <span id="logoEstado" class="logo-fallback-badge">🌿 AUMI Artesanal</span>
-      </div>
-      <div id="medioSemanalBox" class="medio-semanal-box">
-        <p id="estadoMedioSemanal">Cargando destacado de la semana...</p>
-      </div>
-    </div>
-  </section>
-
-  <main class="container">
-    <section class="hero">
-      <h2>Despensa Artesanal con Sabor Auténtico para tu Cocina</h2>
-      <p>Elaboramos <strong>conservas, aceites para cocinar, aderezos, pastas de condimentos y sazonadores</strong> con ingredientes naturales, extracciones cuidadas y recetas pensadas para dar carácter a cada plato.</p>
-      <a href="https://conaumi.github.io/nosotros.html#canasta-descuento" class="btn">Armar Canasta de 3 Productos (10% OFF) 🧺</a>
-    </section>
-
-    <section id="pilares">
-      <h2 class="seccion-titulo">¿Qué Hace Única a Cada Preparación AUMI?</h2>
-      <div class="grid-cards">
-        <article class="card">
-          <h3>Conservas y Pastas de Condimentos</h3>
-          <p>Conservas vegetales, pasta de tomate orgánica y bases condimentadas concentradas que aportan cuerpo y sabor casero en minutos.</p>
-        </article>
-        <article class="card">
-          <h3>Aceites y Aderezos Infusionados</h3>
-          <p>Aceites para cocinar y saltear aromatizados con hierbas y especias, junto con aderezos equilibrados para ensaladas y carnes.</p>
-        </article>
-        <article class="card">
-          <h3>Sazonadores y Despensa Natural</h3>
-          <p>Mezclas de especias, sales condimentadas y productos de cocina formulados sin aditivos artificiales para resaltar ingredientes reales.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="impacto-clientes" class="impacto-section">
-      <h2>Nuestra despensa y comunidad</h2>
-      <p>Cada lote artesanal reúne ingredientes seleccionados, sabores naturales y recetas pensadas para acompañar tu cocina día a día.</p>
-      <a href="https://conaumi.github.io/nosotros.html#canasta-descuento" class="btn-contador-arboles">
-        <span>🧺 Combo de 3 productos</span>
-        <span id="contadorBeneficioCanasta" class="contador-numero">-10%</span>
+  <main>
+    <section class="box hero-box">
+      <h2>Sabor artesanal listo para transformar tu cocina</h2>
+      <p>Elige <strong>3 productos</strong> de nuestra despensa y obtén <strong>10% de descuento</strong> en tu canasta.</p>
+      <a href="./nosotros.html#canasta-descuento" class="btn-cta">
+        <span>Armar canasta de 3</span>
+        <span class="badge-pct">-10%</span>
       </a>
-      <div id="imagenImpactoBox" class="impacto-media-box">
-        <img id="imagenImpactoFirebase" src="" alt="Registro visual de productos y preparaciones AUMI" style="display:none;" />
-        <p id="estadoImagenImpacto" class="impacto-media-caption">Cargando imagen destacada desde Firebase...</p>
+    </section>
+
+    <section class="box">
+      <div class="grid-3">
+        <article class="card-item">
+          <h3>Conservas y Pastas</h3>
+          <p>Conservas vegetales, pasta de tomate orgánica y bases condimentadas para dar cuerpo casero en minutos.</p>
+        </article>
+        <article class="card-item">
+          <h3>Aceites y Aderezos</h3>
+          <p>Aceites aromatizados con hierbas y especias, más aderezos equilibrados para ensaladas, carnes y pan.</p>
+        </article>
+        <article class="card-item">
+          <h3>Sazonadores Naturales</h3>
+          <p>Mezclas de especias y sales condimentadas sin aditivos artificiales para resaltar ingredientes reales.</p>
+        </article>
       </div>
     </section>
 
-    <section class="cotizador-cta">
-      <h3>¿Quieres armar tu canasta y ahorrar un 10% adicional?</h3>
-      <p>En la sección de <strong>Nosotros y Canasta de Descuento</strong> puedes elegir 3 productos cualesquiera de nuestro catálogo y ver el cálculo automático con el 10% de descuento final.</p>
-      <a href="https://conaumi.github.io/nosotros.html#canasta-descuento" class="btn btn-secundario">Ir a la Canasta de Descuento</a>
+    <section class="box">
+      <div class="media-grid">
+        <div class="media-panel">
+          <img id="logoEstatico" src="logo-aumi.png" alt="Logo de AUMI" class="logo-img" />
+          <p class="caption-txt">Escríbenos para asesoría y pedidos AUMI</p>
+          <span id="logoEstado" style="display:none; font-size:0.8rem; font-weight:700;">🌿 AUMI Artesanal</span>
+        </div>
+
+        <div id="medioSemanalBox" class="media-panel">
+          <p id="estadoMedioSemanal" class="caption-txt">Cargando destacado de la semana...</p>
+        </div>
+
+        <div class="media-panel">
+          <img id="imagenImpactoFirebase" src="" alt="Preparaciones y despensa AUMI" style="display:none;" />
+          <p id="estadoImagenImpacto" class="caption-txt">Cargando imagen de despensa...</p>
+        </div>
+      </div>
     </section>
 
-    <section id="preguntas-frecuentes" class="faq-section">
-      <h2>Preguntas Frecuentes</h2>
-      <div class="faq-item">
-        <h3>¿Qué tipos de productos elabora AUMI?</h3>
-        <p>Elaboramos conservas artesanales, aceites infusionados para cocinar, aderezos, pastas de condimentos (como pasta de tomate orgánica), sazonadores naturales y otros insumos para la cocina.</p>
-      </div>
-      <div class="faq-item">
-        <h3>¿Cómo funciona el descuento del 10% en la canasta de 3 productos?</h3>
-        <p>Al seleccionar <strong>3 productos</strong> con precios variables en nuestra calculadora de canasta, el sistema suma los valores y descuenta automáticamente un <strong>10% adicional</strong> sobre el total final.</p>
-      </div>
-      <div class="faq-item">
-        <h3>¿Cómo debo conservar las conservas, aceites y pastas de condimentos una vez abiertos?</h3>
-        <p>Mantén los frascos cerrados en un lugar fresco, seco y lejos de la luz directa; tras abrir conservas, aderezos o pastas húmedas, consérvalos refrigerados y utiliza siempre utensilios limpios y secos.</p>
-      </div>
-      <div class="faq-item">
-        <h3>¿Para qué tipo de cocción sirven los aceites y sazonadores AUMI?</h3>
-        <p>Están diseñados para sofreír, saltear, marinar, hornear y terminar platos tanto en cocina diaria como en preparaciones de mayor detalle aromático.</p>
-      </div>
-      <div class="faq-item">
-        <h3>¿Puedo combinar productos de distintas categorías en mi canasta de 3?</h3>
-        <p>Sí, puedes mezclar por ejemplo una conserva, un aceite para cocinar y un sazonador, o elegir los 3 productos que prefieras dentro del catálogo.</p>
-      </div>
-      <div class="faq-item">
-        <h3>¿Cómo se solicitan los pedidos o el cupón de primera compra?</h3>
-        <p>Puedes revisar la guía de precios y armar tu canasta en <strong>Nosotros</strong>, o registrar tu correo o teléfono en la ventana de bienvenida para recibir tu cupón de primera compra.</p>
-      </div>
+    <section class="box">
+      <h2 style="margin:0 0 0.75rem; color:var(--primary); font-size:1.3rem;">Preguntas Frecuentes</h2>
+      <details>
+        <summary>¿Cómo funciona el 10% en la canasta de 3 productos?</summary>
+        <p>Eliges 3 productos de cualquier categoría en <strong>Nosotros</strong> y se calcula automáticamente un 10% de descuento sobre el total.</p>
+      </details>
+      <details>
+        <summary>¿Cómo conservar los frascos una vez abiertos?</summary>
+        <p>Guarda conservas, aderezos y pastas húmedas en refrigeración usando siempre utensilios limpios y secos; mantén aceites y sazonadores lejos de luz directa.</p>
+      </details>
+      <details>
+        <summary>¿Cómo pedir o reclamar el cupón de primera compra?</summary>
+        <p>Arma tu canasta en <strong>Nosotros</strong> o registra tus datos de contacto para recibir tu cupón de primera compra.</p>
+      </details>
     </section>
   </main>
 
   <footer>
-    <h3>Síguenos en Redes Sociales y Proyectos</h3>
     <div class="social-links">
-      <a href="https://www.tiktok.com/@aumi" target="_blank" rel="noopener noreferrer" class="social-link">🎵 TikTok</a>
-      <a href="https://www.instagram.com/aumi" target="_blank" rel="noopener noreferrer" class="social-link">📸 Instagram</a>
-      <a href="https://www.facebook.com/aumi" target="_blank" rel="noopener noreferrer" class="social-link">📘 Facebook</a>
-      <a href="https://tuftingsolidario.github.io/" target="_blank" rel="noopener noreferrer" class="social-link">🧶 Tuftingsolidario</a>
+      <a href="https://www.tiktok.com/@aumi" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
+      <a href="https://www.instagram.com/aumi" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+      <a href="https://www.facebook.com/aumi" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
+      <a href="https://tuftingsolidario.github.io/" target="_blank" rel="noopener noreferrer">🧶 Tuftingsolidario</a>
     </div>
     <p class="footer-copy">&copy; 2026 · AUMI · Sabores artesanales para tu cocina.</p>
   </footer>
 
   <script>
     (() => {
-      const STORAGE_KEY = "aumi_theme";
-      const rootEl = document.documentElement;
-      const btnTema = document.getElementById("btnTema");
-      const aplicarTema = (tema) => {
-        const dark = tema === "dark";
-        rootEl.toggleAttribute("data-theme", dark);
-        if (dark) rootEl.setAttribute("data-theme", "dark");
-        if (btnTema) btnTema.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
+      const key = "aumi_theme";
+      const btn = document.getElementById("btnTema");
+      const setTheme = (mode) => {
+        const dark = mode === "dark";
+        document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+        if (btn) btn.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
       };
-      aplicarTema(localStorage.getItem(STORAGE_KEY) || "light");
-      btnTema?.addEventListener("click", () => {
-        const siguiente = rootEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
-        localStorage.setItem(STORAGE_KEY, siguiente);
-        aplicarTema(siguiente);
+      setTheme(localStorage.getItem(key) || "light");
+      btn?.addEventListener("click", () => {
+        const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        localStorage.setItem(key, next);
+        setTheme(next);
       });
     })();
   </script>
@@ -286,199 +268,121 @@
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
-       apiKey: "AIzaSyBFaA1TKYzrY_6dtCq2TZI-toWHORuAv8c",
-       authDomain: "aumi-668.firebaseapp.com",
-       projectId: "aumi-668",
-       storageBucket: "aumi-668.firebasestorage.app",
-       messagingSenderId: "996735251207",
-       appId: "1:996735251207:web:97a52e7f2590e1930e8ba2",
-       measurementId: "G-0C31S8YLJD"
-     };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const VIDEO_SEMANAL_LOCAL = "video-semanal.mp4";
-    const STORAGE_BUCKET_URL = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/`;
+      apiKey: "AIzaSyBFaA1TKYzrY_6dtCq2TZI-toWHORuAv8c",
+      authDomain: "aumi-668.firebaseapp.com",
+      projectId: "aumi-668",
+      storageBucket: "aumi-668.firebasestorage.app",
+      messagingSenderId: "996735251207",
+      appId: "1:996735251207:web:97a52e7f2590e1930e8ba2",
+      measurementId: "G-0C31S8YLJD"
+    };
 
-    const medioBox = document.getElementById("medioSemanalBox");
+    const db = getFirestore(initializeApp(firebaseConfig));
+    const bucketBase = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/`;
+
+    const esc = (s) => String(s || "").replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+
+    const driveId = (url) => {
+      const m = String(url || "").trim().match(
+        /(?:drive\.google\.com\/file\/d\/|drive\.google\.com\/open\?id=|lh3\.googleusercontent\.com\/d\/|[?&]id=)([a-zA-Z0-9_-]+)/
+      );
+      return m?.[1] || "";
+    };
+
+    const resolveMediaUrl = (raw) => {
+      const v = String(raw || "").trim();
+      if (!v) return "";
+      if (/^https?:\/\//i.test(v)) {
+        const id = driveId(v);
+        return id && (v.includes("drive.google.com") || v.includes("googleusercontent.com"))
+          ? `https://lh3.googleusercontent.com/d/${id}` : v;
+      }
+      return `${bucketBase}${encodeURIComponent(v.replace(/^\/+/, ""))}?alt=media`;
+    };
+
+    const ytEmbed = (url) => {
+      try {
+        const u = new URL(url);
+        const id = u.searchParams.get("v")
+          || u.pathname.split("/embed/")[1]?.split("/")[0]
+          || u.pathname.split("/shorts/")[1]?.split("/")[0]
+          || (u.hostname.includes("youtu.be") ? u.pathname.replace("/", "").split("/")[0] : "");
+        return id ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1` : url;
+      } catch { return url; }
+    };
+
     const logoImg = document.getElementById("logoEstatico");
     const logoEstado = document.getElementById("logoEstado");
-    const imgImpacto = document.getElementById("imagenImpactoFirebase");
-    const estadoImgImpacto = document.getElementById("estadoImagenImpacto");
-    let logoCargadoOk = false;
+    logoImg?.addEventListener("error", () => {
+      logoImg.style.display = "none";
+      if (logoEstado) logoEstado.style.display = "inline-block";
+    });
 
-    const escapeHTML = (str) => String(str || "")
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-
-    if (logoImg) {
-      logoImg.addEventListener("load", () => {
-        logoCargadoOk = true;
-        logoImg.style.display = "block";
-        if (logoEstado) logoEstado.style.display = "none";
-      });
-      logoImg.addEventListener("error", () => {
-        if (!logoCargadoOk) {
-          logoImg.style.display = "none";
-          if (logoEstado) {
-            logoEstado.style.display = "inline-block";
-            logoEstado.textContent = "🌿 AUMI";
-          }
-        }
-      });
-    }
-
-    const extraerIdDrive = (urlStr) => {
-      const limpia = (urlStr || "").trim();
-      if (!limpia) return "";
-      const patrones = [
-        /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/,
-        /drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/,
-        /lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/,
-        /[?&]id=([a-zA-Z0-9_-]+)/
-      ];
-      for (const p of patrones) {
-        const m = limpia.match(p);
-        if (m?.[1]) return m[1];
-      }
-      return "";
-    };
-
-    const normalizarUrlDriveImagen = (urlStr) => {
-      const limpia = (urlStr || "").trim();
-      if (!limpia) return "";
-      const id = extraerIdDrive(limpia);
-      return id && (limpia.includes("drive.google.com") || limpia.includes("googleusercontent.com"))
-        ? `https://lh3.googleusercontent.com/d/${id}`
-        : limpia;
-    };
-
-    const resolverUrlImagenFirebase = (rawVal) => {
-      const limpia = (rawVal || "").trim();
-      if (!limpia) return "";
-      if (/^https?:\/\//i.test(limpia)) return normalizarUrlDriveImagen(limpia);
-      return `${STORAGE_BUCKET_URL}${encodeURIComponent(limpia.replace(/^\/+/, ""))}?alt=media`;
-    };
-
-    const convertirYouTubeEmbed = (urlStr) => {
-      try {
-        const u = new URL(urlStr);
-        let id = "";
-        if (u.hostname.includes("youtube.com")) {
-          id = u.searchParams.get("v")
-            || u.pathname.split("/embed/")[1]?.split("/")[0]
-            || u.pathname.split("/shorts/")[1]?.split("/")[0]
-            || "";
-        } else if (u.hostname.includes("youtu.be")) {
-          id = u.pathname.replace("/", "").split("/")[0];
-        }
-        return id ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1` : urlStr;
-      } catch {
-        return urlStr;
-      }
-    };
-
-    const activarAutoplayVideo = () => {
-      const videoEl = medioBox?.querySelector("video");
-      if (!videoEl) return;
-      videoEl.muted = true;
-      videoEl.defaultMuted = true;
-      videoEl.playsInline = true;
-      const playSafe = () => videoEl.play()?.catch(() => {});
-      if (videoEl.readyState >= 2) playSafe();
-      else videoEl.addEventListener("canplay", playSafe, { once: true });
-    };
-
-    const renderizarVideoLocal = (titulo) => {
-      if (!medioBox) return;
-      const seguro = escapeHTML(titulo || "Destacado semanal AUMI");
-      medioBox.innerHTML = `
-        <video id="videoSemanalLocal" src="${VIDEO_SEMANAL_LOCAL}" controls autoplay muted loop playsinline preload="auto" onerror="this.outerHTML='<p>No se pudo reproducir <strong>video-semanal.mp4</strong>.</p>';"></video>
-        ${titulo ? `<p class="medio-titulo">${seguro}</p>` : ""}
+    const renderVideoLocal = (titulo) => {
+      const box = document.getElementById("medioSemanalBox");
+      if (!box) return;
+      box.innerHTML = `
+        <video src="video-semanal.mp4" controls autoplay muted loop playsinline preload="metadata"
+          onerror="this.outerHTML='<p class=caption-txt>Destacado semanal AUMI</p>';"></video>
+        <p class="caption-txt">${esc(titulo || "Destacado semanal AUMI")}</p>
       `;
-      activarAutoplayVideo();
     };
 
-    async function cargarImagenImpacto() {
-      if (!imgImpacto || !estadoImgImpacto) return;
-      try {
-        const snapConfig = await getDoc(doc(db, "configuracion", "impacto"));
-        const snapAumi = snapConfig.exists() ? null : await getDoc(doc(db, "configuracion", "aumi_destacado"));
-        const data = snapConfig.exists() ? snapConfig.data() : (snapAumi?.exists() ? snapAumi.data() : null);
-
-        if (!data) {
-          imgImpacto.style.display = "none";
-          estadoImgImpacto.textContent = "Aún no hay registro en configuracion/impacto.";
-          return;
-        }
-
-        const rawFuente =
-          data.impacto || data.imagen || data.imagenUrl || data.foto || data.fotoUrl || data.url || data.storagePath || "";
-        const urlFinal = resolverUrlImagenFirebase(rawFuente);
-        if (!urlFinal) {
-          imgImpacto.style.display = "none";
-          estadoImgImpacto.textContent = "El documento configuracion/impacto no tiene un campo de imagen válido.";
-          return;
-        }
-
-        const leyenda = data.titulo || data.descripcion || data.caption || "Sabores artesanales · @AUMI";
-        imgImpacto.onload = () => {
-          imgImpacto.style.display = "block";
-          estadoImgImpacto.textContent = leyenda;
-        };
-        imgImpacto.onerror = () => {
-          imgImpacto.style.display = "none";
-          estadoImgImpacto.textContent = "No se pudo cargar la imagen desde Drive/Firebase (revisa permisos públicos).";
-        };
-        imgImpacto.src = urlFinal;
-      } catch (err) {
-        console.error("Error cargando configuracion/impacto:", err);
-        imgImpacto.style.display = "none";
-        estadoImgImpacto.textContent = "Error al consultar configuracion/impacto en Firestore.";
-      }
-    }
-
-    async function cargarDestacadoYLogo() {
+    async function cargarDestacado() {
+      const box = document.getElementById("medioSemanalBox");
       try {
         const snap = await getDoc(doc(db, "configuracion", "destacado_semanal"));
-        if (!snap.exists()) return renderizarVideoLocal("");
+        if (!snap.exists()) return renderVideoLocal("");
+        const d = snap.data();
+        const logoUrl = resolveMediaUrl(d.logoUrl);
+        if (logoUrl && logoImg) { logoImg.style.display = "block"; logoImg.src = logoUrl; }
 
-        const data = snap.data();
-        const urlLogo = normalizarUrlDriveImagen(data.logoUrl);
-        if (urlLogo && /^https?:\/\//i.test(urlLogo) && logoImg) {
-          logoImg.style.display = "block";
-          logoImg.src = urlLogo;
-        }
+        const raw = String(d.imagen || d.imagenUrl || d.url || d.videoUrl || "").trim();
+        if (!raw || d.tipo === "video-local") return renderVideoLocal(d.titulo);
 
-        const rawUrl = (data.imagen || data.imagenUrl || data.url || data.videoUrl || "").trim();
-        if (!rawUrl || data.tipo === "video-local") return renderizarVideoLocal(data.titulo || "");
-
-        const seguro = escapeHTML(data.titulo || "Destacado semanal");
-        const esYouTube = rawUrl.includes("youtube.com") || rawUrl.includes("youtu.be") || data.tipo === "youtube";
-        const esVideo = data.tipo === "video" || data.tipo === "mp4" || /\.(mp4|webm|ogg|mov)(\?|$)/i.test(rawUrl) || rawUrl.includes("drive.google.com");
-        let medioHtml = "";
-
-        if (esYouTube) {
-          medioHtml = `<iframe src="${escapeHTML(convertirYouTubeEmbed(rawUrl))}" title="${seguro}" style="width:100%;aspect-ratio:16/9;border:0;border-radius:8px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        } else if (esVideo) {
-          const idDrive = rawUrl.includes("drive.google.com") ? extraerIdDrive(rawUrl) : "";
-          medioHtml = idDrive
-            ? `<iframe src="https://drive.google.com/file/d/${idDrive}/preview?autoplay=1&mute=1" title="${seguro}" style="width:100%;aspect-ratio:16/9;border:0;border-radius:8px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
-            : `<video src="${escapeHTML(rawUrl)}" controls autoplay muted loop playsinline preload="auto" onerror="this.outerHTML='<p>No se pudo reproducir el video.</p>';"></video>`;
+        const title = esc(d.titulo || "Destacado semanal");
+        let html = "";
+        if (raw.includes("youtube.com") || raw.includes("youtu.be") || d.tipo === "youtube") {
+          html = `<iframe src="${esc(ytEmbed(raw))}" title="${title}" style="aspect-ratio:16/9;border:0;" allowfullscreen></iframe>`;
+        } else if (d.tipo === "video" || d.tipo === "mp4" || /\.(mp4|webm|ogg|mov)(\?|$)/i.test(raw) || raw.includes("drive.google.com")) {
+          const gid = raw.includes("drive.google.com") ? driveId(raw) : "";
+          html = gid
+            ? `<iframe src="https://drive.google.com/file/d/${gid}/preview?autoplay=1&mute=1" title="${title}" style="aspect-ratio:16/9;border:0;" allowfullscreen></iframe>`
+            : `<video src="${esc(raw)}" controls autoplay muted loop playsinline preload="metadata"></video>`;
         } else {
-          medioHtml = `<img src="${escapeHTML(normalizarUrlDriveImagen(rawUrl))}" alt="${seguro}" onerror="this.outerHTML='<p>No se pudo mostrar la imagen.</p>';" />`;
+          html = `<img src="${esc(resolveMediaUrl(raw))}" alt="${title}" />`;
         }
-
-        if (medioBox) {
-          medioBox.innerHTML = `${medioHtml}${data.titulo ? `<p class="medio-titulo">${seguro}</p>` : ""}`;
-          activarAutoplayVideo();
-        }
+        if (box) box.innerHTML = `${html}<p class="caption-txt">${title}</p>`;
       } catch {
-        renderizarVideoLocal("");
+        renderVideoLocal("");
       }
     }
 
-    cargarDestacadoYLogo();
-    cargarImagenImpacto();
+    async function cargarImpacto() {
+      const img = document.getElementById("imagenImpactoFirebase");
+      const cap = document.getElementById("estadoImagenImpacto");
+      if (!img || !cap) return;
+      try {
+        let snap = await getDoc(doc(db, "configuracion", "impacto"));
+        if (!snap.exists()) snap = await getDoc(doc(db, "configuracion", "aumi_destacado"));
+        if (!snap.exists()) { cap.textContent = "Sin imagen destacada aún."; return; }
+
+        const d = snap.data();
+        const url = resolveMediaUrl(d.impacto || d.imagen || d.imagenUrl || d.foto || d.fotoUrl || d.url || d.storagePath);
+        if (!url) { cap.textContent = "Sin URL de imagen configurada."; return; }
+
+        img.onload = () => { img.style.display = "block"; cap.textContent = d.titulo || d.caption || "Sabores artesanales · @AUMI"; };
+        img.onerror = () => { img.style.display = "none"; cap.textContent = "Revisa permisos públicos de la imagen."; };
+        img.src = url;
+      } catch {
+        cap.textContent = "No se pudo cargar la imagen de despensa.";
+      }
+    }
+
+    cargarDestacado();
+    cargarImpacto();
   </script>
 </body>
 </html>
